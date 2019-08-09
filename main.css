@@ -1,0 +1,182 @@
+
+body{
+background-color: #121212;
+
+}
+
+h3{
+    font-family: 'Roboto', sans-serif;
+    padding-left:20px;
+    color:rgb(148, 148, 148);
+}
+h1{
+    font-family: 'Roboto', sans-serif;
+    color:white;
+}
+
+.img-fluid{
+    width: 100%;
+}
+
+#Carousel-1{
+
+width: 100%;    
+}
+#Carousel-2{
+
+    width: 100%;    
+    }
+
+.h-size{
+    height: 160px;
+}
+@media screen and (max-width: 600px) {
+
+    .h-size{
+       
+        
+        
+    }
+    .nav-link{
+        position:absolute;
+    }
+    
+    }
+
+    @media screen and (max-width: 768px) {
+
+        .h-size{
+    
+            height: 100px;
+        }
+    
+        .nav-link{
+            position:absolute;
+        }
+        
+        }
+
+    
+.but{
+    position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  font-size: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+h5{
+    color: white;
+    margin-left:38%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.bt-style{
+    background-color:black;
+    opacity: 0.5;
+    color: white; 
+}
+.bt-style:hover{
+    background-color:black;
+    opacity: 0.7;
+
+}
+
+button:focus{
+    outline: 1px solid black !important;
+    outline-color: currentcolor;
+   outline-style: solid;
+    outline-width: 1px;
+}
+
+.modal-content {
+    background-color: rgba(12, 12, 12, 0.623);
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+
+}
+p{
+    color:white;
+}
+hr{
+    border-color: rgb(134, 134, 134);
+}
+
+.jumbotron{
+    margin-top:55px;
+    border-radius: 0px;
+    background-image: url("jumbImage.jpg");
+    background-color: #121212;
+}
+
+.info-color{
+
+    background-color: #121212;
+} 
+
+.jumbButton:hover {
+    color: #fff;
+    background-color: rgb(192, 5, 5);
+    border-color:  rgb(192, 5, 5);
+}
+.jumbButton {
+    padding:10px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: red;
+    border-color: red;
+}
+
+.close:hover {
+    color: #eee;
+}
+
+button.close {
+    padding: 0;
+    background-color: rgba(238, 238, 238, 0.568);
+}
+.modal-header .close {
+
+    padding: 1rem 1rem;
+    margin: 3px 3px 3px 3px;
+    padding: 2px;
+        padding-top: 2px;
+    border-radius: 3px;
+
+}
+
+.custfooter {
+
+    margin-top:50px;
+
+  }
+
+ a{
+
+   color:white;
+
+ }
+
+ .custli {
+
+   display:inline;
+
+ }
+
+ .fab{
+
+  width:20px;
+
+ }
+
+ .copyright{
+     color:#eee;
+   
+ }
+

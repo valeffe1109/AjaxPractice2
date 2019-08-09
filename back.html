@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a7528ddc63.js"></script>
+
+    <title>Hello, world!</title>
+</head>
+<script src="helper.js"></script>
+
+<style>
+    body {
+
+        background-color: #292939;
+        color: white;
+    }
+</style>
+
+
+<body>
+    <h1 class="text-center" style="margin-top:5rem;">BACK OFFICE</h1>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <i class="fas fa-cogs"></i>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add FILM</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container" style="margin-top:2rem">
+                        <div class="row mx-auto my-auto">
+                            <div class="col-12 col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="name" aria-describedby="Objectname"
+                                        placeholder="Film Title">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Film Description</label>
+                                    <textarea class="form-control" id="description" rows="3"></textarea>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="category" aria-describedby="Category"
+                                        placeholder="Film Category">
+                                </div>
+
+
+
+
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="imageUrl" aria-describedby="FilmIMG"
+                                        placeholder="Img Url">
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" onclick="addMovie()" class="btn btn-danger">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" id="myMovies">
+
+    </div>
+<div class="container">
+
+
+
+  <ul id="myMovies"></ul>
+</div>
+    <script>
+
+
+
+
+
+
+
+
+
+        //Back Office
+        var movies = [];
+        var id = null;
+        var myHeaders = new Headers({
+
+
+            "Authorization": "Basic " + btoa("user9:sP4YMKhBpqQHAPJN"),
+            "Content-Type": "application/json"
+
+
+
+
+        });
+
+
+
+        window.onload = async () => {
+
+
+
+            // IF THERE IS AN ID 
+
+            var movie = null;
+            var urlParams = new URLSearchParams(window.location.search);
+            id = urlParams.get("id");
+
+
+
+
+            if (id) {
+                movie = await getMovie(id);
+                document.querySelector("#name").value = movie.name;
+                document.querySelector("#description").value = movie.description;
+                document.querySelector("#category").value = movie.category;
+                document.querySelector("#imageUrl").value = movie.imageUrl;
+            }
+
+            var movie = await getMovies();
+
+
+
+            // ADD A NEW FILM 
+
+            addMovie = async () => {
+
+                var newMovie = {
+
+                    name: document.querySelector("#name").value,
+                    description: document.querySelector("#description").value,
+                    category: document.querySelector("#category").value,
+                    imageUrl: document.querySelector("#imageUrl").value,
+                };
+
+                if (id) {
+                    var response = await fetch("https://strivetestapi.azurewebsites.net/api/movies/" + id , {
+                        method: "PUT",
+                        body: JSON.stringify(newMovie),
+                        headers: myHeaders
+                    });
+
+                }
+                else {
+                    var response = await fetch("https://strivetestapi.azurewebsites.net/api/movies/", {
+                        method: "POST",
+                        body: JSON.stringify(newMovie),
+                        headers: myHeaders
+                    });
+
+
+                }
+            }
+
+
+
+            // LIST ALL THE FILMS 
+
+            var response = await fetch("https://strivetestapi.azurewebsites.net/api/movies/", {
+
+
+                headers: myHeaders,
+            });
+
+            var categories = await response.json();
+
+            console.log(categories);
+
+
+
+            categories.forEach(async category => {
+
+                var response = await fetch("https://strivetestapi.azurewebsites.net/api/movies/" + category, {
+                    headers: myHeaders,
+                });
+
+                var movies = await response.json();
+
+
+                var collegamento = movies.map(movie=>{return `<li class="list-item"><a href="details.html?id=${movie._id}&category=${category}">${movie.name}</a></li>`}).join("");
+
+                console.log(collegamento);
+
+
+                document.querySelector("body").innerHTML += `<h2>${category}</h2><ul>${collegamento}</ul>`
+
+            });
+
+
+
+  
+
+
+
+
+
+        };
+
+
+
+
+
+
+
+
+        // Get the movie 
+        // var myNewMovie = {
+        //  name: "123123" ,
+        //  imageUrl: "https://www.google.it",
+        // category: "horror",
+        //description: "a film about anything" ,
+
+        //   };
+
+
+
+
+        // DELETE FUNCTION 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // EDIT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
